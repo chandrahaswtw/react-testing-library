@@ -22,7 +22,7 @@ All the test file ends with .spec.js or .test.js or inside the \_\_test\_\_ fold
   - `queryAllBy...` Returns an array of all matching nodes for a query, and return an empty array ([]) if no elements match.
   - `findAllBy...` Returns a promise which resolves to an array of elements when any elements are found which match the given query. The promise is rejected if no elements are found after a default timeout of 1000ms.
 
-  ![Alt text](/images/QUeryCheatSheet.png)
+  ![Alt text](/images/QueryCheatSheet.png)
 
 ### ByRole
 
