@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# INTRODUCTION
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+NOTE: This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+All the test file ends with .spec.js or .test.js or inside the \_\_test\_\_ folder, where it has simply the .js files inside are considered the test files and `jest` will pick up all these files.
 
-### `npm run build`
+# ALL ABOUT @testing-library/react
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Queries
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### About Queries
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Single Elements
+  - `getBy...` Returns the matching node for a query, and throw a descriptive error if no elements match or if more than one match is found
+  - `queryBy...` Returns the matching node for a query, and return `null` if no elements match. This is useful for asserting an element that is not present.
+  - `findBy...` Returns a Promise which resolves when an element is found which matches the given query. The promise is rejected if no element is found or if more than one element is found after a default timeout of 1000ms.
+- Multiple Elements
 
-### `npm run eject`
+  - `getAllBy...` Returns an array of all matching nodes for a query, and throws an error if no elements match.
+  - `queryAllBy...` Returns an array of all matching nodes for a query, and return an empty array ([]) if no elements match.
+  - `findAllBy...` Returns a promise which resolves to an array of elements when any elements are found which match the given query. The promise is rejected if no elements are found after a default timeout of 1000ms.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  ![Alt text](./images/QUeryCheatSheet.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### ByRole
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Refer to this [link](https://www.w3.org/TR/html-aria/#docconformance) to see all roles.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+For example
 
-## Learn More
+- `heading` role include h1, h2, h3, h4, h5 and h6.
+- `list` includes ul and li.
+- `button` includes button.
+- `link` includes a
+- `textbox` includes input, type='text'
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Examples:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+const inputs = screen.getAllByRole("textbox");
+const button = screen.getByRole("button");
+```
 
-### Code Splitting
+### ByLabelText
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+<label htmlFor="email">Email</label>
+<input type="text" id="email" />
+```
 
-### Analyzing the Bundle Size
+Now to get the appropriate input element we do as. It specifically searches for label with text `/email/i`. It chooses anything with the id `email`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+const nameInput = screen.getByLabelText(/email/i);
+```
 
-### Making a Progressive Web App
+Great but if we want to be more specific (Choose only input but not anything) we can with `getByRole` as below. The second parameter is the `name` which typically looks for the label text.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+screen.getByRole("textbox", { name: /email/i });
+```
 
-### Advanced Configuration
+### ByText
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### ByDisplayValue
 
-### Deployment
+### ByAltText
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### ByTitle
 
-### `npm run build` fails to minify
+### ByTestId
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Matchers
+
+React testing library exposes extra matchers along with the ones that jest provides and are exposed on the global variable `expect`. We can find the whole list of matchers [here]("https://github.com/testing-library/jest-dom#custom-matchers").
+
+## Testing playground
+
+If you add the below in your testcase and it generates an URL on console when we run the tests.
+
+```
+screen.logTestingPlaygroundURL();
+```
+
+Now we when we open the generated URL we get the UI as below, when we hover over any item we get the corresponding query there.
+
+![Alt text](./images/testingPlayground1.png)
+
+At times we cannot get the required query. Say we wanted to check for `tr` we cannot hover, just add some extra styles and we can get the exact query as below:
+
+![Alt text](./images/testingPlayground2.png)
+
+# ALL ABOUT @testing-library/user-event
+
+```
+import user from "@testing-library/user-event";
+```
+
+We can simulate the user events as below:
+
+- `user.click(element)` simulates clicking on provided element
+- `user.keyboard('asdf')` simulates typing asdf
+- `user.keyboard('{Enter}')` simulates pressing enter key.
