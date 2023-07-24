@@ -28,13 +28,20 @@ All the test file ends with .spec.js or .test.js or inside the \_\_test\_\_ fold
 
 Refer to this [link](https://www.w3.org/TR/html-aria/#docconformance) to see all roles.
 
-For example
+Some common roles are as below:
 
-- `heading` role include h1, h2, h3, h4, h5 and h6.
-- `list` includes ul and li.
-- `button` includes button.
-- `link` includes a
-- `textbox` includes input, type='text'
+- `<a href="/"></a>` &#8594; link
+- `<button></button>` &#8594; button
+- `<footer></footer>` &#8594; contentinfo
+- `<h1></h1>` &#8594; heading (h1, h2, h3, h4, h5 and h6)
+- `<header></header>` &#8594; banner
+- `<img src="" alt="" />` &#8594; img
+- `<input type="text" name="" id="" />` &#8594; textbox
+- `<input type="checkbox" name="" id="" />` &#8594; checkbox
+- `<input type="radio" name="" id="" />` &#8594; radio
+- `<input type="number" name="" id="" />` &#8594; spinbutton
+- `<li></li>` &#8594; listitem
+- `<ul></ul>` &#8594; listgroup
 
 Examples:
 
@@ -91,6 +98,14 @@ Now we when we open the generated URL we get the UI as below, when we hover over
 At times we cannot get the required query. Say we wanted to check for `tr` we cannot hover, just add some extra styles and we can get the exact query as below:
 
 ![Alt text](/images/testingPlayground2.png)
+
+## Screen debug
+
+The below prints all the resultant HTML on console, where we can check what is the DOM.
+
+```
+screen.debug()
+```
 
 # ALL ABOUT @testing-library/user-event
 
