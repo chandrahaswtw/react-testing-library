@@ -24,6 +24,14 @@ All the test file ends with .spec.js or .test.js or inside the \_\_test\_\_ fold
 
   ![Alt text](/images/QueryCheatSheet.png)
 
+#### Summing up all
+
+| Goal of test                       | Use                     |
+| :--------------------------------- | :---------------------- |
+| Prove an element exists            | `getBy`, `getAllBy`     |
+| Prove an element does not exist    | `queryBy`, `queryAllBy` |
+| Prove an element eventually exists | `findBy`, `findAllBy`   |
+
 ### ByRole
 
 Refer to this [link](https://www.w3.org/TR/html-aria/#docconformance) to see all roles.
