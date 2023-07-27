@@ -43,11 +43,50 @@ Some common roles are as below:
 - `<li></li>` &#8594; listitem
 - `<ul></ul>` &#8594; listgroup
 
-Examples:
+#### Example 1 : Basic use or role
 
 ```
 const inputs = screen.getAllByRole("textbox");
 const button = screen.getByRole("button");
+```
+
+#### Example 2 : Get a specific element based on name
+
+If we want to be more specific we can with `getByRole` as below. The second parameter is the `name` which typically looks for the label text.
+
+```
+<button>submit</button>
+```
+
+```
+screen.getByRole("button", {name : /submit/i });
+```
+
+##### Example 3 : Get a specific element based on label
+
+We can selectively choose elements based on the label. Say for a textbox we have the below HTML
+
+```
+<label htmlFor="fName">Full Name</label>
+<input id="fName" />
+```
+
+```
+screen.getByRole("textbox", { name: /Full Name/i });
+```
+
+##### Example 3 : Get a specific element based on aria-label
+
+Sometimes buttons don't have inner text, we can add `aria-label` to tell what the gutton actually does. Say for example we have a **search** button as below:
+
+```
+<button aria-label>
+  <svg/>
+</button>
+```
+
+```
+screen.getByRole("button", {name : /search/i });
 ```
 
 ### ByLabelText
@@ -63,11 +102,7 @@ Now to get the appropriate input element we do as. It specifically searches for 
 const nameInput = screen.getByLabelText(/email/i);
 ```
 
-Great but if we want to be more specific (Choose only input but not anything) we can with `getByRole` as below. The second parameter is the `name` which typically looks for the label text.
-
-```
-screen.getByRole("textbox", { name: /email/i });
-```
+If we wanted to choose something particular but not any element, use the format discussed in `ByRole` with `name` as second parameter.
 
 ### ByText
 
