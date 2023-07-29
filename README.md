@@ -26,13 +26,39 @@ All the test file ends with .spec.js or .test.js or inside the \_\_test\_\_ fold
 
 #### Summing up all
 
-| Goal of test                       | Use                     |
-| :--------------------------------- | :---------------------- |
+| Goal of test                       | Use                     | Comments                                                                   |
+| :--------------------------------- | :---------------------- | :------------------------------------------------------------------------- |
 | Prove an element exists            | `getBy`, `getAllBy`     |
 | Prove an element does not exist    | `queryBy`, `queryAllBy` |
-| Prove an element eventually exists | `findBy`, `findAllBy`   |
+| Prove an element eventually exists | `findBy`, `findAllBy`   | This waits for 1 sec by default to find the element and if not, it rejects |
+
+An example of these:
+
+```
+Say we have a textbox missing in JSX and we intended to test it.
+
+it("Basic example getBy queryBy findBy", async () => {
+  render(<UserList users={users}></UserList>);
+  expect(() => screen.getByRole("textbox")).toThrow();
+  expect(screen.queryByRole("textbox")).toBeNull();
+  await expect(screen.findByRole("textbox")).rejects.toThrow();
+});
+
+Say we have a single textbox missing in JSX and we intended to test it.
+
+it("Basic example getBy queryBy findBy", async () => {
+  render(<UserList users={users}></UserList>);
+  expect(() => screen.getByRole("textbox")).toHaveLength(1);
+  expect(screen.queryByRole("textbox")).toHaveLength(1);
+  await expect(screen.findByRole("textbox")).resolves.toHaveLength(1);
+});
+
+
+```
 
 ### ByRole
+
+**Always prefer to use ByRole and if you don't have an option, then go and use others.**
 
 Refer to this [link](https://www.w3.org/TR/html-aria/#docconformance) to see all roles.
 
@@ -114,17 +140,122 @@ If we wanted to choose something particular but not any element, use the format 
 
 ### ByText
 
+If we don't care about what element but if we want to fetch element based on visible text on the DOM, we do the below:
+
+```
+const nameInput = screen.getByText("email");
+```
+
 ### ByDisplayValue
+
+It is used to get the input textboxes based on value inside it.
+
+Say for example:
+
+```
+<input type="text" id="lastName" />
+document.getElementById('lastName').value = 'Norris'
+```
+
+We can test as below:
+
+```
+const lastNameInput = screen.getByDisplayValue('Norris')
+```
+
+We can do the same for textarea and select dropdowns as well.
 
 ### ByAltText
 
+For search for all images based on alt text we do as below:
+
+```
+<img alt="Incredibles 2 Poster" src="/incredibles-2.png" />
+
+const incrediblesPosterImg = screen.getByAltText("Incredibles 2 Poster")
+```
+
 ### ByTitle
 
+As we know we use `title` to show extra information about element, when we hover over as native tooltip HTMP provides, we can see the info. To do so, we do the below:
+
+```
+<span title="Delete" id="2"></span>
+```
+
+```
+const deleteElement = screen.getByTitle('Delete')
+```
+
 ### ByTestId
+
+**This must be the last option, if nothing works choose this**
+
+```
+<div data-testid="custom-element" />
+```
+
+```
+const element = screen.getByTestId('custom-element')
+```
+
+## within
+
+If we want to search something within the found element we can use `within` which need to be imported from `@testing-library/react` as below:
+
+```
+import { within } from "@testing-library/react";
+```
+
+```
+render(<UserList></UserList>);
+
+const rows = within(screen.getByTestId("userListTesting")).getAllByRole("row");
+expect(rows).toHaveLength(2);
+```
+
+In the above we did for `getByTestId``, we can use any query..
 
 ## Matchers
 
 React testing library exposes extra matchers along with the ones that jest provides and are exposed on the global variable `expect`. We can find the whole list of matchers [here]("https://github.com/testing-library/jest-dom#custom-matchers").
+
+### Custom matchers
+
+Say we have to repeat a functionality and we want a custom matcher, say if we need to search for an element `within` we can do as below:
+
+```
+function toContainRole(container, role, quantity = 1) {
+  const elements = within(container).queryAllByRole(role);
+  if (elements.length === quantity) {
+    return {
+      pass: true,
+    };
+  } else {
+    return {
+      pass: false,
+      message: () =>
+        `Expected to find ${quantity} ${role} elements but got ${elements.length} elements`,
+    };
+  }
+}
+```
+
+`expect` expects return value in a praticular way. Return value must be an object with key `pass` a boolean and/or `message` a function with a return string if we need to display in case the test fails.
+
+Now We need to `extend` in `expect` as below:
+
+```
+  expect.extend({ toContainRole });
+```
+
+We can use normally in a test case as we does with expect as below:
+
+```
+render(<UserList></UserList>);
+const targetNode = screen.getByTestId("userListTesting");
+expect(targetNode).toContainRole("row", 2);
+```
 
 ## Testing playground
 
