@@ -218,7 +218,7 @@ In the above we did for `getByTestId``, we can use any query..
 
 ## Matchers
 
-React testing library exposes extra matchers along with the ones that jest provides and are exposed on the global variable `expect`. We can find the whole [list of matchers here]("https://github.com/testing-library/jest-dom#custom-matchers").
+React testing library exposes extra matchers along with the ones that jest provides and are exposed on the global variable `expect`. We can find the whole [list of matchers]("https://github.com/testing-library/jest-dom#custom-matchers") here.
 
 ### Custom matchers
 
