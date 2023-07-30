@@ -146,6 +146,8 @@ If we don't care about what element but if we want to fetch element based on vis
 const nameInput = screen.getByText("email");
 ```
 
+**Note**: ByText looks for the entire text say we are looking for `30` but we have a `<div>30 items</div>` it fails as it looks for the entire text within a tag. In that case We can use regular expressions instead as `/30/` and this just looks for a matching text.
+
 ### ByDisplayValue
 
 It is used to get the input textboxes based on value inside it.
@@ -198,6 +200,8 @@ const deleteElement = screen.getByTitle('Delete')
 ```
 const element = screen.getByTestId('custom-element')
 ```
+
+**Note: All the above we can use regular expressions instead of the strings we pass through. It's a choice of what we are looking in a test**
 
 ## within
 
