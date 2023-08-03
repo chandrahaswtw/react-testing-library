@@ -114,7 +114,7 @@ screen.getByRole("textbox", { name: /Full Name/i });
 Sometimes buttons don't have inner text, we can add `aria-label` to tell what the gutton actually does. Say for example we have a **search** button as below:
 
 ```
-<button aria-label>
+<button aria-label="search">
   <svg/>
 </button>
 ```
@@ -126,11 +126,13 @@ screen.getByRole("button", {name : /search/i });
 ### ByLabelText
 
 ```
-<label htmlFor="email">Email</label>
-<input type="text" id="email" />
+<label htmlFor="emailID">Email</label>
+<input type="text" id="emailID" />
 ```
 
-Now to get the appropriate input element we do as. It specifically searches for label with text `/email/i`. It chooses anything with the id `email`
+- Now to get the appropriate input element we do as. It specifically searches for label with text content `/email/i`.
+- `ByLabelText` works only on form elements (like inputs, checkboxes, radio buttons) that are labeled using the label element.
+- If we wish to use for other elements we can use `aria-label` and use `ByLabelText`
 
 ```
 const nameInput = screen.getByLabelText(/email/i);
