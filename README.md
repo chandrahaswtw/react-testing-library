@@ -298,3 +298,21 @@ We can simulate the user events as below:
 - `user.click(element)` simulates clicking on provided element
 - `user.keyboard('asdf')` simulates typing asdf
 - `user.keyboard('{Enter}')` simulates pressing enter key.
+
+# IMPORTANT POINTS
+
+## act warnings
+
+`act` gives a small window which enables the state changes. The recommendations give by terminal to wrap with `act` are misleading. The message says you should! Don't do it. Do not add `act` to your test. Using the below, react testing library already wraps within the `act` for us internally.
+
+- screen.findBy (Discussed above)
+- screen.findAllBy (Discussed above)
+- user.keyboard (Discussed above)
+- user.click (Discussed above)
+- waitFor :
+
+```
+await waitFor(() => {
+   We don't need to use find* here. We can directly call get* or query* to fetch the results directly as waitFor waits for us. We can use this whenever we are expecting a state change, or an API call etc.
+})
+```
