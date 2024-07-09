@@ -48,9 +48,9 @@ Say we have a single textbox missing in JSX and we intended to test it.
 
 it("Basic example getBy queryBy findBy", async () => {
   render(<UserList users={users}></UserList>);
-  expect(() => screen.getByRole("textbox")).toHaveLength(1);
-  expect(screen.queryByRole("textbox")).toHaveLength(1);
-  await expect(screen.findByRole("textbox")).resolves.toHaveLength(1);
+  expect(screen.getByRole("textbox")).toBeInTheDocument();
+  expect(screen.queryByRole("textbox")).toBeInTheDocument();
+  await expect(screen.findByRole("textbox")).resolves.toBeInTheDocument();
 });
 
 
