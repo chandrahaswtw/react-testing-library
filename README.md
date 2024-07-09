@@ -75,7 +75,13 @@ Some common roles are as below:
 - `<input type="radio" name="" id="" />` &#8594; radio
 - `<input type="number" name="" id="" />` &#8594; spinbutton
 - `<li></li>` &#8594; listitem
-- `<ul></ul>` &#8594; listgroup
+- `<ul></ul>` &#8594; list
+- `thead` &#8594; rowgroup
+- `tbody` &#8594; rowgroup
+- `tr` &#8594; row
+- `th` &#8594; columnheader
+- `td` &#8594; cell
+
 
 #### Example 1 : Basic use or role
 
@@ -109,7 +115,7 @@ We can selectively choose elements based on the label. Say for a textbox we have
 screen.getByRole("textbox", { name: /Full Name/i });
 ```
 
-##### Example 3 : Get a specific element based on aria-label
+##### Example 4 : Get a specific element based on aria-label
 
 Sometimes buttons don't have inner text, we can add `aria-label` to tell what the gutton actually does. Say for example we have a **search** button as below:
 
