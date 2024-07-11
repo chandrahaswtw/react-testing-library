@@ -298,7 +298,7 @@ rerender(<TheComponent {...props} />);
 
 ## User interactions
 
-We have fireEvent imported and used as below. We can find the documentation [a here](https://testing-library.com/docs/dom-testing-library/api-events/). It offers a few use cases and is recommended to use `@testing-library/user-event`
+We have fireEvent imported and used as below. We can find the documentation [here](https://testing-library.com/docs/dom-testing-library/api-events/). It offers a few use cases and is recommended to use `@testing-library/user-event`
 
 ```
 import {fireEvent} from "@testing-library/react"
