@@ -283,12 +283,12 @@ const linkElement = container.querySelector("label > a");
 ```
 
 ### NOTE:
-- Just imagine the `container` as `document` and we can run all commands we run on document.
+- Just imagine the `container` as `DOM - document` and we can run all commands we run on `document`.
 - The `linkElement` we are getting from `container` is of same node structure we would've got from other react testing library commands discussed so far. We can do all assertions as we done earlier.
 
 ## Rerender the component
 
-There might be a need where we may feel like to render the component and examine the output, for example, if we wish to change props and re-render we can do a below:
+There might be a need where we may feel like to re-render the component and examine the output. For example, if we wish to change props and re-render, we can do a below:
 
 ```
 const { rerender } = render(<TheComponent {...props} />);
@@ -341,7 +341,7 @@ We can simulate the user events as below:
 - `user.click(element)` simulates clicking on provided element
 - `user.keyboard('asdf')` simulates typing asdf. To type something we first need to click on the elemene first.
 - `user.keyboard('{Enter}')` simulates pressing enter key.
-- `user.type(element, someText)` simulates typing in a text box. We can also use the combination of `user.click(element)` and `user.keyboard('asdf')` but this provides a direct solution
+- `user.type(element, someText)` simulates typing in a text box. We can also use the combination of `user.click(element)` and `user.keyboard('asdf')` but this provides a direct solution.
 
 # IMPORTANT POINTS
 
