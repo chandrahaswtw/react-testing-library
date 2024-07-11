@@ -293,6 +293,14 @@ The below prints all the resultant HTML on console, where we can check what is t
 screen.debug()
 ```
 
+## User interactions
+
+We have fireEvent imported and used as below. We can find the documentation [a here]([https://github.com/user/repo/blob/branch/other_file.md](https://testing-library.com/docs/dom-testing-library/api-events/)). It offers a few use cases and is recommended to use `@testing-library/user-event`
+
+```
+import {fireEvent} from "@testing-library/react"
+```
+
 # ALL ABOUT @testing-library/user-event
 
 ```
