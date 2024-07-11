@@ -269,6 +269,43 @@ const targetNode = screen.getByTestId("userListTesting");
 expect(targetNode).toContainRole("row", 2);
 ```
 
+## Using direct DOM commands.
+
+Sometimes we cannot find elements in any which way and we need to rely on DOM, we can do as below:
+
+```
+const { container } = render(<TheComponent {...props} />);
+```
+Now we can access the elements as:
+
+```
+const linkElement = container.querySelector("label > a");
+```
+
+### NOTE:
+- Just imagine the `container` as `document` and we can run all commands we run on document.
+- The `linkElement` we are getting from `container` is of same node structure we would've got from other react testing library commands discussed so far. We can do all assertions as we done earlier.
+
+## Rerender the component
+
+There might be a need where we may feel like to render the component and examine the output, for example, if we wish to change props and re-render we can do a below:
+
+```
+const { rerender } = render(<TheComponent {...props} />);
+props.TheKey = TheValue
+rerender(<TheComponent {...props} />);
+```
+
+## User interactions
+
+We have fireEvent imported and used as below. We can find the documentation [a here](https://testing-library.com/docs/dom-testing-library/api-events/). It offers a few use cases and is recommended to use `@testing-library/user-event`
+
+```
+import {fireEvent} from "@testing-library/react"
+```
+
+
+
 ## Testing playground
 
 If you add the below in your testcase and it generates an URL on console when we run the tests.
@@ -293,14 +330,6 @@ The below prints all the resultant HTML on console, where we can check what is t
 screen.debug()
 ```
 
-## User interactions
-
-We have fireEvent imported and used as below. We can find the documentation [a here]([https://github.com/user/repo/blob/branch/other_file.md](https://testing-library.com/docs/dom-testing-library/api-events/)). It offers a few use cases and is recommended to use `@testing-library/user-event`
-
-```
-import {fireEvent} from "@testing-library/react"
-```
-
 # ALL ABOUT @testing-library/user-event
 
 ```
@@ -310,8 +339,9 @@ import user from "@testing-library/user-event";
 We can simulate the user events as below:
 
 - `user.click(element)` simulates clicking on provided element
-- `user.keyboard('asdf')` simulates typing asdf
+- `user.keyboard('asdf')` simulates typing asdf. To type something we first need to click on the elemene first.
 - `user.keyboard('{Enter}')` simulates pressing enter key.
+- `user.type(element, someText)` simulates typing in a text box. We can also use the combination of `user.click(element)` and `user.keyboard('asdf')` but this provides a direct solution
 
 # IMPORTANT POINTS
 
@@ -321,8 +351,7 @@ We can simulate the user events as below:
 
 - screen.findBy (Discussed above)
 - screen.findAllBy (Discussed above)
-- user.keyboard (Discussed above)
-- user.click (Discussed above)
+- user events from `@testing-library/user-event`
 - waitFor :
 
 ```
