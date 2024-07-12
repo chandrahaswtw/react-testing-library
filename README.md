@@ -286,6 +286,28 @@ const linkElement = container.querySelector("label > a");
 - Just imagine the `container` as `DOM - document` and we can run all commands we run on `document`.
 - The `linkElement` we are getting from `container` is of same node structure we would've got from other react testing library commands discussed so far. We can do all assertions as we done earlier.
 
+### Difference between the `container` apporach and other commands on `screen` (get*by, query*by, etc)
+
+This is a very important difference to keep in mind.
+
+Example 1: See the below, when we use `container`, it gets hold of the DOM. Even if we `rerender`, we can use the same `container` variable, no need to refresh it as it's automatically pointing to the DOM.
+
+```
+const { rerender , container } = render(<TheComponent {...props} />);
+expect(container.something).someChecking.....
+rerender(<TheComponent {...props} />)
+expect(container.something).someChecking.....
+```
+
+Example 2: See the below, the commands from `screen.*` need to be refreshed after rerender, else they will be pointing to the same old element. 
+
+```
+render(<TheComponent {...props} />);
+let TheElement = screen.getBySomething("something")
+rerender(<TheComponent {...props} />)
+TheElement = screen.getBySomething("something")
+```
+
 ## Rerender the component
 
 There might be a need where we may feel like to re-render the component and examine the output. For example, if we wish to change props and re-render, we can do a below:
