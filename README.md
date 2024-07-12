@@ -269,6 +269,16 @@ const targetNode = screen.getByTestId("userListTesting");
 expect(targetNode).toContainRole("row", 2);
 ```
 
+## Rerender the component
+
+There might be a need where we may feel like to re-render the component and examine the output. For example, if we wish to change props and re-render, we can do a below:
+
+```
+const { rerender } = render(<TheComponent {...props} />);
+props.TheKey = TheValue
+rerender(<TheComponent {...props} />);
+```
+
 ## Using direct DOM commands.
 
 Sometimes we cannot find elements in any which way and we need to rely on DOM, we can do as below:
@@ -306,16 +316,6 @@ render(<TheComponent {...props} />);
 let TheElement = screen.getBySomething("something")
 rerender(<TheComponent {...props} />)
 TheElement = screen.getBySomething("something")
-```
-
-## Rerender the component
-
-There might be a need where we may feel like to re-render the component and examine the output. For example, if we wish to change props and re-render, we can do a below:
-
-```
-const { rerender } = render(<TheComponent {...props} />);
-props.TheKey = TheValue
-rerender(<TheComponent {...props} />);
 ```
 
 ## User interactions
