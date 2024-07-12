@@ -296,7 +296,7 @@ const linkElement = container.querySelector("label > a");
 - Just imagine the `container` as `DOM - document` and we can run all commands we run on `document`.
 - The `linkElement` we are getting from `container` is of same node structure we would've got from other react testing library commands discussed so far. We can do all assertions as we done earlier.
 
-### Difference between the `container` apporach and other commands on `screen` (get*by, query*by, etc)
+### Difference between the `container` apporach and other commands on `screen` (get, query, find etc)
 
 This is a very important difference to keep in mind.
 
