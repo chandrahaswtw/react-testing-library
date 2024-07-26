@@ -365,7 +365,7 @@ We can simulate the user events as below:
 - `user.keyboard('{Enter}')` simulates pressing enter key.
 - `user.type(element, someText)` simulates typing in a text box. We can also use the combination of `user.click(element)` and `user.keyboard('asdf')` but this provides a direct solution.
 
-# IMPORTANT POINTS
+# waitFor and act
 
 ## act warnings
 
@@ -381,3 +381,43 @@ await waitFor(() => {
    We don't need to use find* here. We can directly call get* or query* to fetch the results directly as waitFor waits for us. We can use this whenever we are expecting a state change, or an API call etc.
 })
 ```
+
+## waitFor timeout
+
+`waitFor` has a default timeout of `1000 ms`, we can increase the timeout as below:
+
+```
+await (waitFor(() => screen.getByText('something'),{timeout:3000}));
+```
+
+## Using waitFor with jest timers
+
+Say we are introducing custom timeouts with jest timers, we can do on following ways
+
+### Keeping jest timer inside waitFor()
+
+We need to manually set the timeout within `waitFor` as we are running the timer within `waitFor` and it will timeout after it's default `1000ms`
+
+```
+await waitFor(
+  () => {
+    jest.advanceTimersByTime(10000);
+    expect(screen.getByText('something')).toBeInTheDocument();
+  }, {timeout:12000}
+);
+```
+
+### Keeping jest timer outside waitFor() - Preferred way
+
+We don't need to add the custom timeout for waitFor as we added the timer outside. This method is preferred.
+
+```
+jest.advanceTimersByTime(10000);
+await waitFor(
+  () => {
+    expect(screen.getByText('something')).toBeInTheDocument();
+  }
+);
+```
+
+
