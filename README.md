@@ -364,7 +364,7 @@ We can simulate the user events as below:
 - `user.keyboard('asdf')` simulates typing asdf. To type something we first need to click on the elemene first.
 - `user.keyboard('{Enter}')` simulates pressing enter key.
 - `user.type(element, someText)` simulates typing in a text box. We can also use the combination of `user.click(element)` and `user.keyboard('asdf')` but this provides a direct solution.
-
+- `user.tab()` simulates pressing tab key.
 # waitFor and act
 
 ## act warnings
